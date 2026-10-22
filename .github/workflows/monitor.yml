@@ -1,0 +1,59 @@
+name: API Performance Monitor
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Newman
+        run: npm install -g newman
+
+      - name: Create Monitor Collection
+        run: |
+          cat << 'EOF' > monitor_collection.json
+          {
+            "info": {
+              "name": "ReqRes Shift-Right Monitor",
+              "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+            },
+            "item": [
+              {
+                "name": "GET Users Availability & SLA Check",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "exec": [
+                        "pm.test(\"Status code is 200\", function () {",
+                        "    pm.response.to.have.status(200);",
+                        "});",
+                        "pm.test(\"Response time is below 800ms\", function () {",
+                        "    pm.expect(pm.response.responseTime).to.be.below(800);",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "request": {
+                  "method": "GET",
+                  "header": [],
+                  "url": "https://reqres.in/api/users?page=1"
+                }
+              }
+            ]
+          }
+          EOF
+
+      - name: Run Monitor
+        run: newman run monitor_collection.json
