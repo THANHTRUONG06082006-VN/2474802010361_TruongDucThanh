@@ -1,28 +1,12 @@
 {
-	"id": "7e006d5d-75ca-4b5f-84a7-f4da5aa3bd8e",
-	"name": "TruongDucThanh_2474802010361_ReqRes",
-	"values": [
-		{
-			"key": "baseUrl",
-			"value": "",
-			"type": "default",
-			"enabled": true
-		},
-		{
-			"key": "userId",
-			"value": "",
-			"type": "default",
-			"enabled": true
-		},
-		{
-			"key": "userToken",
-			"value": "",
-			"type": "default",
-			"enabled": true
-		}
-	],
-	"color": null,
-	"_postman_variable_scope": "environment",
-	"_postman_exported_at": "2026-10-22T12:07:28.517Z",
-	"_postman_exported_using": "Postman/12.33.3-261022-0328"
+  "id": "environment-id-uuid",
+  "name": "TruongDucThanh_2474802010361_ReqRes",
+  "values": [
+    {
+      "key": "baseUrl",
+      "value": "https://reqres.in",
+      "type": "text",
+      "enabled": true
+    }
+  ]
 }
